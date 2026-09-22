@@ -42,4 +42,16 @@ class SecurityConfigTest {
         mockMvc.perform(post("/tarefas/1/excluir").with(csrf()))
                 .andExpect(status().isForbidden());
     }
+
+    @Test
+    @WithMockUser(username = "operador", roles = "OPERADOR")
+    void operadorNaoPodeAcessarTiposDeTarefa() throws Exception {
+        mockMvc.perform(get("/tipos-tarefa")).andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(username = "operador", roles = "OPERADOR")
+    void operadorNaoPodeAcessarClientes() throws Exception {
+        mockMvc.perform(get("/clientes")).andExpect(status().isForbidden());
+    }
 }
