@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Usuário</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link th:href="@{/css/app.css}" rel="stylesheet" />
+  </head>
+  <body class="app-page page-usuarios">
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+    <div class="container-fluid">
+      <div class="row">
+        <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+        <main class="col-md-9 col-lg-10 p-4 p-lg-5">
+          <h1
+            class="h3 mb-4"
+            th:text="${usuarioForm.id == null ? 'Novo usuário' : 'Editar usuário'}"
+          ></h1>
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+              <form
+                th:object="${usuarioForm}"
+                th:action="${usuarioForm.id == null ? '/usuarios' : '/usuarios/' + usuarioForm.id}"
+                method="post"
+                novalidate
+              >
+                <div class="mb-3">
+                  <label class="form-label" for="nome">Nome *</label
+                  ><input
+                    class="form-control"
+                    th:errorclass="is-invalid"
+                    th:field="*{nome}"
+                    id="nome"
+                    maxlength="120"
+                    required
+                    autofocus
+                  />
+                  <div class="invalid-feedback" th:errors="*{nome}"></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="username">Usuário *</label
+                  ><input
+                    class="form-control"
+                    th:errorclass="is-invalid"
+                    th:field="*{username}"
+                    id="username"
+                    maxlength="60"
+                    required
+                    autocomplete="off"
+                  />
+                  <div class="invalid-feedback" th:errors="*{username}"></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="senha"
+                    >Senha
+                    <span th:if="${usuarioForm.id == null}">*</span></label
+                  ><input
+                    type="password"
+                    class="form-control"
+                    th:errorclass="is-invalid"
+                    th:field="*{senha}"
+                    id="senha"
+                    maxlength="72"
+                    autocomplete="new-password"
+                  />
+                  <div class="form-text" th:if="${usuarioForm.id != null}">
+                    Deixe em branco para manter a senha atual.
+                  </div>
+                  <div class="invalid-feedback" th:errors="*{senha}"></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="perfil">Perfil *</label
+                  ><select
+                    class="form-select"
+                    th:errorclass="is-invalid"
+                    th:field="*{perfil}"
+                    id="perfil"
+                    required
+                  >
+                    <option value="">Selecione</option>
+                    <option
+                      th:each="perfil : ${perfis}"
+                      th:value="${perfil}"
+                      th:text="${perfil.descricao}"
+                    ></option>
+                  </select>
+                  <div class="invalid-feedback" th:errors="*{perfil}"></div>
+                </div>
+                <div class="form-check mb-4">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    th:field="*{ativo}"
+                    id="ativo"
+                  /><label class="form-check-label" for="ativo">Ativo</label>
+                </div>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-primary" type="submit">Salvar</button
+                  ><a class="btn btn-outline-secondary" th:href="@{/usuarios}"
+                    >Cancelar</a
+                  >
+                </div>
+              </form>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
