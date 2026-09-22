@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Tarefas</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link th:href="@{/css/app.css}" rel="stylesheet" />
+  </head>
+  <body class="app-page page-tarefas">
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+    <div class="container-fluid">
+      <div class="row">
+        <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+        <main class="col-md-9 col-lg-10">
+          <header
+            class="page-heading d-flex justify-content-between align-items-end"
+          >
+            <div>
+              <h1>Tarefas</h1>
+              <p>Gerencie as tarefas disponíveis para atribuição.</p>
+            </div>
+            <a class="btn btn-primary btn-new" th:href="@{/tarefas/nova}"
+              ><i class="bi bi-plus-lg me-2"></i>Nova tarefa</a
+            >
+          </header>
+          <div
+            th:if="${sucesso}"
+            class="alert alert-success"
+            th:text="${sucesso}"
+          ></div>
+          <div
+            th:if="${erro}"
+            class="alert alert-danger"
+            th:text="${erro}"
+          ></div>
+          <section class="panel-card users-card">
+            <div class="table-responsive">
+              <table class="table app-table align-middle">
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Tipo</th>
+                    <th>Classificação</th>
+                    <th>Cliente</th>
+                    <th class="text-end">Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="tarefa : ${tarefas}">
+                    <td th:text="${tarefa.id}"></td>
+                    <td th:text="${tarefa.nome}"></td>
+                    <td
+                      class="text-secondary"
+                      th:text="${tarefa.descricao}"
+                    ></td>
+                    <td>
+                      <span
+                        class="profile-badge profile-operador"
+                        th:text="${tarefa.tipo.nome}"
+                      ></span>
+                    </td>
+                    <td>
+                      <span
+                        class="status-badge"
+                        th:classappend="${tarefa.classificacao.name() == 'CLIENTE'} ? ' status-active' : ' profile-supervisor'"
+                        th:text="${tarefa.classificacao.descricao}"
+                      ></span>
+                    </td>
+                    <td
+                      th:text="${tarefa.cliente != null ? tarefa.cliente.nome : '—'}"
+                    ></td>
+                    <td class="text-end text-nowrap">
+                      <a
+                        class="btn btn-outline-primary action-btn me-2"
+                        title="Editar"
+                        th:href="@{/tarefas/{id}/editar(id=${tarefa.id})}"
+                        ><i class="bi bi-pencil-fill"></i
+                      ></a>
+                      <form
+                        class="d-inline"
+                        th:action="@{/tarefas/{id}/excluir(id=${tarefa.id})}"
+                        method="post"
+                        onsubmit="
+                          return confirm('Deseja excluir esta tarefa?');
+                        "
+                      >
+                        <button
+                          class="btn btn-outline-danger action-btn"
+                          title="Excluir"
+                        >
+                          <i class="bi bi-trash3-fill"></i>
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                  <tr th:if="${#lists.isEmpty(tarefas)}">
+                    <td colspan="7" class="text-center text-secondary py-5">
+                      Nenhuma tarefa cadastrada.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

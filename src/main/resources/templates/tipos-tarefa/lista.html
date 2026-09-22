@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Tipos de tarefa</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link th:href="@{/css/app.css}" rel="stylesheet" />
+  </head>
+  <body class="app-page page-tipos">
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+    <div class="container-fluid">
+      <div class="row">
+        <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+        <main class="col-md-9 col-lg-10">
+          <header
+            class="page-heading d-flex justify-content-between align-items-end"
+          >
+            <div>
+              <h1>Tipos de tarefa</h1>
+              <p>Cadastre e gerencie os tipos disponíveis para as tarefas.</p>
+            </div>
+            <a class="btn btn-primary btn-new" th:href="@{/tipos-tarefa/novo}"
+              ><i class="bi bi-plus-lg me-2"></i>Novo tipo</a
+            >
+          </header>
+          <div
+            th:if="${sucesso}"
+            class="alert alert-success"
+            th:text="${sucesso}"
+          ></div>
+          <div
+            th:if="${erro}"
+            class="alert alert-danger"
+            th:text="${erro}"
+          ></div>
+          <section class="panel-card users-card">
+            <div class="table-responsive">
+              <table class="table app-table align-middle">
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Nome</th>
+                    <th>Status</th>
+                    <th class="text-end">Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="item : ${tipos}">
+                    <td th:text="${item.id}"></td>
+                    <td th:text="${item.nome}"></td>
+                    <td>
+                      <span
+                        class="status-badge"
+                        th:classappend="${item.ativo} ? ' status-active' : ' status-inactive'"
+                        ><span class="status-dot"></span
+                        ><span
+                          th:text="${item.ativo} ? 'Ativo' : 'Inativo'"
+                        ></span
+                      ></span>
+                    </td>
+                    <td class="text-end">
+                      <a
+                        class="btn btn-outline-primary action-btn me-2"
+                        title="Editar"
+                        th:href="@{/tipos-tarefa/{id}/editar(id=${item.id})}"
+                        ><i class="bi bi-pencil-fill"></i
+                      ></a>
+                      <form
+                        class="d-inline"
+                        th:action="@{/tipos-tarefa/{id}/alternar-ativo(id=${item.id})}"
+                        method="post"
+                      >
+                        <button
+                          class="btn action-btn"
+                          th:classappend="${item.ativo} ? ' btn-outline-danger' : ' btn-outline-success'"
+                          th:title="${item.ativo} ? 'Desativar' : 'Ativar'"
+                        >
+                          <i
+                            class="bi"
+                            th:classappend="${item.ativo} ? ' bi-power' : ' bi-check-circle-fill'"
+                          ></i>
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                  <tr th:if="${#lists.isEmpty(tipos)}">
+                    <td colspan="4" class="text-center text-secondary py-5">
+                      Nenhum registro cadastrado.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
