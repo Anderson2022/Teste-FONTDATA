@@ -1,4 +1,4 @@
-﻿CREATE TABLE usuarios (
+CREATE TABLE usuarios (
     id BIGSERIAL PRIMARY KEY,
     nome VARCHAR(120) NOT NULL,
     username VARCHAR(60) NOT NULL,

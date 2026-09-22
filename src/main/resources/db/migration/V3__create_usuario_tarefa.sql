@@ -1,4 +1,4 @@
-﻿CREATE TABLE usuario_tarefa (
+CREATE TABLE usuario_tarefa (
     id BIGSERIAL PRIMARY KEY,
     usuario_id BIGINT NOT NULL,
     tarefa_id BIGINT NOT NULL,
