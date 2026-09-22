@@ -1,0 +1,154 @@
+{
+  "info": {
+    "_postman_id": "d98c16f8-79cb-45cc-a74d-controle-tarefas",
+    "name": "Controle de Tarefas",
+    "description": "Coleção para testar a aplicação Controle de Tarefas. Execute primeiro Obter CSRF e depois Login Supervisor.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "csrfToken", "value": "" },
+    { "key": "usuarioId", "value": "1" },
+    { "key": "tarefaId", "value": "1" },
+    { "key": "tipoId", "value": "1" },
+    { "key": "clienteId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Autenticação",
+      "item": [
+        {
+          "name": "1 - Obter CSRF",
+          "request": { "method": "GET", "url": "{{baseUrl}}/login" },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "const match = pm.response.text().match(/name=\"_csrf\"\\s+value=\"([^\"]+)\"/);",
+                "if (match) { pm.collectionVariables.set('csrfToken', match[1]); }",
+                "pm.test('Token CSRF encontrado', () => pm.expect(match).not.to.be.null);"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "2 - Login Supervisor",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/x-www-form-urlencoded" }],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "username", "value": "admin" },
+                { "key": "password", "value": "admin123" },
+                { "key": "_csrf", "value": "{{csrfToken}}" }
+              ]
+            },
+            "url": "{{baseUrl}}/login"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tarefas",
+      "item": [
+        { "name": "Listar tarefas", "request": { "method": "GET", "url": "{{baseUrl}}/tarefas" } },
+        {
+          "name": "Cadastrar tarefa interna",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/x-www-form-urlencoded" }],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "nome", "value": "Organizar documentos" },
+                { "key": "descricao", "value": "Organizar os documentos internos do setor." },
+                { "key": "tipoId", "value": "{{tipoId}}" },
+                { "key": "classificacao", "value": "INTERNA" },
+                { "key": "clienteId", "value": "" },
+                { "key": "_csrf", "value": "{{csrfToken}}" }
+              ]
+            },
+            "url": "{{baseUrl}}/tarefas"
+          }
+        },
+        {
+          "name": "Cadastrar tarefa de cliente",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/x-www-form-urlencoded" }],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "nome", "value": "Conferir estoque do cliente" },
+                { "key": "descricao", "value": "Verificar produtos e registrar divergências." },
+                { "key": "tipoId", "value": "{{tipoId}}" },
+                { "key": "classificacao", "value": "CLIENTE" },
+                { "key": "clienteId", "value": "{{clienteId}}" },
+                { "key": "_csrf", "value": "{{csrfToken}}" }
+              ]
+            },
+            "url": "{{baseUrl}}/tarefas"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Clientes",
+      "item": [
+        { "name": "Listar clientes", "request": { "method": "GET", "url": "{{baseUrl}}/clientes" } },
+        {
+          "name": "Cadastrar cliente",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/x-www-form-urlencoded" }],
+            "body": { "mode": "urlencoded", "urlencoded": [
+              { "key": "nome", "value": "Cliente Exemplo" },
+              { "key": "ativo", "value": "true" },
+              { "key": "_csrf", "value": "{{csrfToken}}" }
+            ]},
+            "url": "{{baseUrl}}/clientes"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tipos de tarefa",
+      "item": [
+        { "name": "Listar tipos", "request": { "method": "GET", "url": "{{baseUrl}}/tipos-tarefa" } },
+        {
+          "name": "Cadastrar tipo",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/x-www-form-urlencoded" }],
+            "body": { "mode": "urlencoded", "urlencoded": [
+              { "key": "nome", "value": "Urgente" },
+              { "key": "ativo", "value": "true" },
+              { "key": "_csrf", "value": "{{csrfToken}}" }
+            ]},
+            "url": "{{baseUrl}}/tipos-tarefa"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Atribuições",
+      "item": [
+        { "name": "Consultar atribuições", "request": { "method": "GET", "url": "{{baseUrl}}/atribuicoes?usuarioId={{usuarioId}}" } },
+        {
+          "name": "Atribuir tarefa",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/x-www-form-urlencoded" }],
+            "body": { "mode": "urlencoded", "urlencoded": [
+              { "key": "usuarioId", "value": "{{usuarioId}}" },
+              { "key": "tarefaId", "value": "{{tarefaId}}" },
+              { "key": "_csrf", "value": "{{csrfToken}}" }
+            ]},
+            "url": "{{baseUrl}}/atribuicoes"
+          }
+        }
+      ]
+    }
+  ]
+}
