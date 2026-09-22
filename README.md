@@ -68,8 +68,7 @@ Sistema web para cadastro, gerenciamento e atribuição de tarefas a usuários.
 ## Arquitetura
 
 | O projeto está organizado na seguinte estrutura: |
-
-
+|---|---|
 |controller   |recebe as requisições HTTP e seleciona as páginas|
 |service      |concentra as regras de negócio|
 |repository   |realiza o acesso ao banco com Spring Data JPA|
