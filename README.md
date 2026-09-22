@@ -67,14 +67,15 @@ Sistema web para cadastro, gerenciamento e atribuição de tarefas a usuários.
 
 ## Arquitetura
 
-| O projeto está organizado na seguinte estrutura: |
+
+| Camada | Responsabilidade |
 |---|---|
-|controller   |recebe as requisições HTTP e seleciona as páginas|
-|service      |concentra as regras de negócio|
-|repository   |realiza o acesso ao banco com Spring Data JPA|
-|entity       |representa as tabelas do banco de dados|
-|dto          |transporta e valida dados dos formulários|
-|templates    |páginas HTML processadas pelo Thymeleaf|
+| `controller` | Recebe as requisições HTTP, processa as entradas e direciona para as páginas ou serviços necessários. |
+| `service` | Concentra as regras de negócio e coordena as operações da aplicação. |
+| `repository` | Responsável pelo acesso e persistência dos dados utilizando Spring Data JPA. |
+| `entity` | Representa as entidades e tabelas persistidas no banco de dados. |
+| `dto` | Transporta, organiza e valida os dados utilizados nos formulários e operações da aplicação. |
+| `templates` | Contém as páginas HTML processadas pelo Thymeleaf. |
 
 
 ## Banco de dados
