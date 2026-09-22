@@ -6,72 +6,73 @@ Sistema web para cadastro, gerenciamento e atribuição de tarefas a usuários.
 ## Implementações
 ###  autorização
 
- Login com usuário e senha.
- Senhas armazenadas com BCrypt.
- Controle de acesso com Spring Security.
- Perfis `SUPERVISOR` e `OPERADOR`.
- Redirecionamento após o login de acordo com o perfil.
- Página personalizada para acesso negado.
+- Login com usuário e senha.
+- Senhas armazenadas com BCrypt.
+- Controle de acesso com Spring Security.
+- Perfis `SUPERVISOR` e `OPERADOR`.
+- Redirecionamento após o login de acordo com o perfil.
+- Página personalizada para acesso negado.
 
 ### Perfil Supervisor
 
- Acesso ao Dashboard.
- Cadastro, edição, ativação e desativação de usuários.
- Cadastro, edição e exclusão de tarefas.
- Atribuição e remoção de tarefas por usuário.
- Possibilidade de atribuir a mesma tarefa a usuários diferentes.
- Visualização das tarefas atribuídas ao próprio usuário.
+- Acesso ao Dashboard.
+- Cadastro, edição, ativação e desativação de usuários.
+- Cadastro, edição e exclusão de tarefas.
+- Atribuição e remoção de tarefas por usuário.
+- Possibilidade de atribuir a mesma tarefa a usuários diferentes.
+- Visualização das tarefas atribuídas ao próprio usuário.
 
 ### Perfil Operador
 
- Acesso somente à página **Minhas tarefas**.
- Visualização apenas das tarefas vinculadas ao usuário autenticado.
- Sem acesso ao cadastro de usuários, gerenciamento de tarefas ou atribuições.
+- Acesso somente à página **Minhas tarefas**.
+- Visualização apenas das tarefas vinculadas ao usuário autenticado.
+- Sem acesso ao cadastro de usuários, gerenciamento de tarefas ou atribuições.
 
 ### Dashboard
 
- Quantidade de usuários.
- Quantidade de tarefas.
- Quantidade de atribuições.
- Quantidade de supervisores.
- Quantidade de operadores.
- Atalhos para as principais funcionalidades.
+
+- Quantidade de usuários.
+- Quantidade de tarefas.
+- Quantidade de atribuições.
+- Quantidade de supervisores.
+- Quantidade de operadores.
+- Atalhos para as principais funcionalidades.
 
 ### Interface
 
- Layout responsivo para computador, tablet e celular.
- Menu lateral com indicação da página ativa.
- Cabeçalho com usuário autenticado e botão para sair.
- Ícones nas ações de editar, excluir e remover.
- Badges para perfil, status e tipo de tarefa.
+- Layout responsivo para computador, tablet e celular.
+- Menu lateral com indicação da página ativa.
+- Cabeçalho com usuário autenticado e botão para sair.
+- Ícones nas ações de editar, excluir e remover.
+- Badges para perfil, status e tipo de tarefa.
 
-## Tecnologias e Bibliotecas  utilizadas
+## Tecnologias utilizadas
 
-= Java 21
-= Spring Boot 3.5.6
-= Spring MVC
-= Spring Data JPA
-= Spring Security
-= Thymeleaf
-= Bean Validation
-= Flyway
-= PostgreSQL 17
-= Bootstrap 5
-= Docker e Docker Compose
-= Maven
-
+- Java 21
+- Spring Boot 3.5.6
+- Spring MVC
+- Spring Data JPA
+- Spring Security
+- Thymeleaf
+- Bean Validation
+- Flyway
+- PostgreSQL 17
+- Bootstrap 5
+- Docker e Docker Compose
+- Maven
+- JUnit 5 e Mockito
 
 ## Arquitetura
 
 O projeto está organizado na seguinte estrutura:
 
 
-controller  = recebe as requisições HTTP e seleciona as páginas
-service     = concentra as regras de negócio
-repository  = realiza o acesso ao banco com Spring Data JPA
-entity      = representa as tabelas do banco de dados
-dto         = transporta e valida dados dos formulários
-templates   = páginas HTML processadas pelo Thymeleaf
+controller  - recebe as requisições HTTP e seleciona as páginas
+service     - concentra as regras de negócio
+repository  - realiza o acesso ao banco com Spring Data JPA
+entity      - representa as tabelas do banco de dados
+dto         - transporta e valida dados dos formulários
+templates   - páginas HTML processadas pelo Thymeleaf
 
 
 ## Banco de dados
