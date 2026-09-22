@@ -9,10 +9,10 @@ import java.util.List;
 public interface UsuarioTarefaRepository extends JpaRepository<UsuarioTarefa, Long> {
     boolean existsByUsuarioIdAndTarefaId(Long usuarioId, Long tarefaId);
 
-    @EntityGraph(attributePaths = {"tarefa"})
+    @EntityGraph(attributePaths = { "tarefa", "tarefa.tipo", "tarefa.cliente" })
     List<UsuarioTarefa> findByUsuarioIdOrderByTarefaNome(Long usuarioId);
 
-    @EntityGraph(attributePaths = {"tarefa"})
+    @EntityGraph(attributePaths = { "tarefa", "tarefa.tipo", "tarefa.cliente" })
     List<UsuarioTarefa> findByUsuarioUsernameOrderByTarefaNome(String username);
 
     boolean existsByTarefaId(Long tarefaId);
