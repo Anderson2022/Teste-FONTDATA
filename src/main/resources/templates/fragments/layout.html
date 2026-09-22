@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<nav th:fragment="navbar" class="navbar navbar-dark bg-primary shadow-sm">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand fw-semibold" th:href="@{/}">Controle de Tarefas</a>
+        <div class="d-flex align-items-center gap-3 text-white">
+            <span sec:authentication="name"></span>
+            <form th:action="@{/logout}" method="post"><button class="btn btn-sm btn-outline-light" type="submit">Sair</button></form>
+        </div>
+    </div>
+</nav>
+<aside th:fragment="sidebar" class="col-md-3 col-lg-2 sidebar p-3">
+    <nav class="nav flex-column gap-1">
+        <a sec:authorize="hasRole('SUPERVISOR')" class="nav-link" th:href="@{/dashboard}">Dashboard</a>
+        <a sec:authorize="hasRole('SUPERVISOR')" class="nav-link" th:href="@{/usuarios}">Usuários</a>
+        <a sec:authorize="hasRole('SUPERVISOR')" class="nav-link" th:href="@{/tarefas}">Tarefas</a>
+        <a sec:authorize="hasRole('SUPERVISOR')" class="nav-link" th:href="@{/atribuicoes}">Atribuições</a>
+        <a class="nav-link" th:href="@{/minhas-tarefas}">Minhas tarefas</a>
+    </nav>
+</aside>
+</body>
+</html>
