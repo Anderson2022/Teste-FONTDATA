@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Minhas tarefas</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link th:href="@{/css/app.css}" rel="stylesheet" />
+  </head>
+  <body class="app-page page-minhas">
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+    <div class="container-fluid">
+      <div class="row">
+        <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+        <main class="col-md-9 col-lg-10">
+          <header class="page-heading">
+            <h1>
+              <i class="bi bi-check2-square text-primary me-2"></i>Minhas
+              tarefas
+            </h1>
+            <p>Consulte as tarefas atribuídas ao seu usuário.</p>
+          </header>
+          <section class="panel-card users-card">
+            <div class="table-responsive">
+              <table class="table app-table align-middle">
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Tipo</th>
+                    <th>Classificação</th>
+                    <th>Cliente</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="item : ${atribuicoes}">
+                    <td th:text="${item.tarefa.id}"></td>
+                    <td th:text="${item.tarefa.nome}"></td>
+                    <td th:text="${item.tarefa.descricao}"></td>
+                    <td>
+                      <span
+                        class="profile-badge profile-operador"
+                        th:text="${item.tarefa.tipo.nome}"
+                      ></span>
+                    </td>
+                    <td th:text="${item.tarefa.classificacao.descricao}"></td>
+                    <td
+                      th:text="${item.tarefa.cliente != null ? item.tarefa.cliente.nome : '—'}"
+                    ></td>
+                    <td>
+                      <span class="status-badge status-active"
+                        ><i class="bi bi-check-circle-fill"></i>Atribuída</span
+                      >
+                    </td>
+                  </tr>
+                  <tr th:if="${#lists.isEmpty(atribuicoes)}">
+                    <td colspan="7" class="text-center text-secondary py-5">
+                      <i class="bi bi-inbox fs-2 d-block mb-2"></i>Nenhuma
+                      tarefa atribuída.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
