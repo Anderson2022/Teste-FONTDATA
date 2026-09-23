@@ -75,7 +75,7 @@ public class TarefaService {
                 || !tipo.getId().equals(tarefa.getTipo().getId())))
             throw new RegraNegocioException("Selecione um tipo de tarefa ativo.");
         Cliente cliente = null;
-        
+
         if (form.getClassificacao() == ClassificacaoTarefa.CLIENTE) {
             if (form.getClienteId() == null)
                 throw new RegraNegocioException("Selecione o cliente da tarefa.");
